@@ -148,7 +148,7 @@ export function initProductList() {
     ].join("");
 
     return `
-      <article class="pcard" data-pid="${String(p.id)}">
+      <article class="pcard" data-pid="${String(p.id)}" data-product-code="${p.product_code}">
         <img class="pthumb" src="${p.img}" alt="">
         <div class="pname">${p.name}</div>
         <div class="pmeta">${tags}</div>

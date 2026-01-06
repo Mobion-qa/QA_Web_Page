@@ -193,6 +193,8 @@ export function initProductDetail() {
   }
 
   const baseId = product.baseId || product.id;
+  // ✅ QA/Tracking Anchor
+  document.body.dataset.productCode = baseId;
 
   // 이미지/썸네일
   const imgs = (product.imgs && product.imgs.length) ? product.imgs : [product.img].filter(Boolean);
@@ -253,6 +255,7 @@ export function initProductDetail() {
 
     addToCart({
       id: product.id,
+      product_code: baseId,
       name: product.name,
       img: imgs[0] || "",
       op,
@@ -272,6 +275,7 @@ export function initProductDetail() {
     const cart = getCart();
     cart.items = [{
       id: product.id,
+      product_code: baseId,
       name: product.name,
       img: imgs[0] || "",
       op,
@@ -284,35 +288,38 @@ export function initProductDetail() {
     location.href = `./cart.html?${carryQuery({ autobuy: "1" })}`;
   });
 
-  // Payload(JSON)
-  const payload = {
-    product_id: product.id,
-    base_id: baseId,
-    name: product.name,
-    image: imgs[0] || "",
-    op,
-    sp,
-    campaign: campaign ?? null,
-    mediaca: mediaca ?? null,
-    tracking: tracking ?? null,
-    ts: new Date().toISOString()
-  };
-  
- // ✅ QA Payload Viewer 연결
-  if (typeof window.setQAPayload === "function") {
-    window.setQAPayload({
-      product_id: product.id,
-      name: product.name,
-      img: imgs[0] || "",
-      op,
-      dp: sp,
-      campaign,
-      mediaca,
-      tracking,
-      tx: new Date().toISOString()
-    });
-  }
+// ===== Payload (JSON) =====
+const payload = {
+  product_code: baseId,          // ✅ 상품 코드 (기준 키)
+  variant_id: product.id,        // 옵션/버전 ID
+  product_name: product.name,
+  image_url: imgs[0] || "",
+  price_origin: op,
+  price_sale: sp,
 
+  // 트래킹 파라미터
+  campaign: campaign ?? null,
+  mediaca: mediaca ?? null,
+  tracking: tracking ?? null,
+
+  ts: new Date().toISOString()
+};
+
+// ===== QA Payload Viewer 연결 =====
+if (typeof window.setQAPayload === "function") {
+  window.setQAPayload({
+  product_code: baseId,      // ✅ 추가
+  variant_id: product.id,    // ✅ 추천 (옵션/버전)
+  name: product.name,
+  img: imgs[0] || "",
+  op,
+  dp: sp,
+  campaign,
+  mediaca,
+  tracking,
+  tx: new Date().toISOString()
+  });
+}
   /**const payloadBox = $("payloadBox");
   payloadBox.textContent = JSON.stringify(payload, null, 2);
 
@@ -419,10 +426,10 @@ export function initProductDetail() {
   }
 
   function compareAndRender(payload, ui){
-    // payload 키는 네 예시 기준: { product_id, base_id, name, img, op, dp, campaign, mediaca, tracking, tx }
+    // payload 키(표준): { product_code, variant_id, name, img, op, dp, campaign, mediaca, tracking, tx }
     const pl = payload || {};
 
-    safeText($("qaProductId"), pl.product_id ?? pl.base_id ?? "-");
+    safeText($("qaProductId"),pl.product_code ?? pl.base_id ?? pl.variant_id ?? pl.product_id ?? "-");
     safeText($("qaName"), pl.name ?? "-");
     safeText($("qaCampaign"), pl.campaign ?? "-");
     safeText($("qaMediaca"), pl.mediaca ?? "-");

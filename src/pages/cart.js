@@ -6,7 +6,8 @@ import { carryQuery, goCat } from "../lib/nav.js";
 function calc(cart) {
   const sumOp = cart.items.reduce((a, i) => a + (Number(i.op || 0) * Number(i.qty || 0)), 0);
   const sumSp = cart.items.reduce((a, i) => a + (Number(i.sp || 0) * Number(i.qty || 0)), 0);
-  return { sumOp, sumSp, discount: (sumOp - sumSp), total: sumSp };
+  const sumQty = cart.items.reduce((a, i) => a + (Number(i.qty || 0)), 0);
+  return {sumOp, sumSp, sumQty, discount: (sumOp - sumSp), total: sumSp};
 }
 
 export function initCart() {
@@ -29,13 +30,14 @@ export function initCart() {
       document.getElementById("sumPrice").textContent = "0원";
       document.getElementById("sumDiscount").textContent = "0원";
       document.getElementById("sumTotal").textContent = "0원";
+      document.getElementById("sumQty").textContent = "0개";
       return;
     }
 
     emptyEl.style.display = "none";
 
     itemsEl.innerHTML = cart.items.map((it, idx) => `
-      <div class="item">
+      <div class="item" data-product-code="${it.product_code ?? ""}">
         <img class="thumb" src="${it.img}" alt="">
         <div>
           <div class="name">${it.name}</div>
@@ -57,6 +59,7 @@ export function initCart() {
     document.getElementById("sumPrice").textContent = formatKRW(sums.sumOp);
     document.getElementById("sumDiscount").textContent = "-" + formatKRW(sums.discount);
     document.getElementById("sumTotal").textContent = formatKRW(sums.total);
+    document.getElementById("sumQty").textContent = `${sums.sumQty}개`;
   }
 
   document.getElementById("items").addEventListener("click", (e) => {
@@ -97,6 +100,8 @@ export function initCart() {
       ts: Date.now(),
       items: cart.items.map(it => ({
         id: it.id,
+        productId: it.id,
+        product_code: it.product_code,
         name: it.name,
         qty: it.qty,
         sp: it.sp,

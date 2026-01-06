@@ -68,15 +68,29 @@ export function initOrderDetail() {
   }
 
   itemsEl.innerHTML = items.map(it => `
-    <div class="row">
-      <div class="rowMain" style="display:flex; gap:12px; align-items:center;">
-        ${it.img ? `<img src="${it.img}" alt="" style="width:56px;height:56px;border-radius:12px;object-fit:cover;">` : ""}
-        <div>
-          <div class="rowTitle">${it.name || "상품"}</div>
-          <div class="rowSub">${formatKRW(Number(it.sp || 0))} · ${it.qty || 1}개</div>
-          ${it.option ? `<div class="rowSub">옵션: ${it.option}</div>` : ""}
+    <div class="row"
+       data-product-id="${it.productId || it.id || ""}"
+       data-product-code="${it.product_code || ""}">
+       
+    <div class="rowMain" style="display:flex; gap:12px; align-items:center;">
+      ${it.img ? `<img src="${it.img}" alt="" style="width:56px;height:56px;border-radius:12px;object-fit:cover;">` : ""}
+      <div>
+        <div class="rowTitle">${it.name || "상품"}</div>
+
+        <!-- 가격 / 수량 -->
+        <div class="rowSub">
+          ${formatKRW(Number(it.sp || 0))} · ${it.qty || 1}개
         </div>
+
+        <!-- ✅ 상품 코드 / 상품 ID (QA & 트래킹용) -->
+        <div class="rowSub" style="color:#777; font-size:12px;">
+          product_code: ${it.product_code || "-"} /
+          productId: ${it.productId || it.id || "-"}
+        </div>
+
+        ${it.option ? `<div class="rowSub">옵션: ${it.option}</div>` : ""}
       </div>
     </div>
+  </div>
   `).join("");
 }

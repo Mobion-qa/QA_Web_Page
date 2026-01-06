@@ -5,7 +5,7 @@ export function buildListProducts() {
   const P = buildProducts();
   return P.map(p => ({
     id: p.id,
-    baseId: p.baseId || String(p.id).split("-V")[0],
+    product_code: p.baseId || String(p.id).split("-V")[0],
     cat: p.cat,
     brand: p.brand,
     name: p.name,
