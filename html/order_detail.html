@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MobionMall - Order Detail</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/mypage.css" />
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <main class="wrap">
+    <h1 class="pageTitle">주문 상세</h1>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2 id="odTitle">주문번호 -</h2>
+        <a class="link" href="./mypage.html">마이페이지로</a>
+      </div>
+
+      <div class="list" id="odSummary"></div>
+      <div class="list" id="odItems"></div>
+
+      <div class="actionsRow" style="margin-top:16px;">
+        <button class="btn ghost" id="btnBack">뒤로</button>
+        <a class="btn" href="./product_list.html">쇼핑 계속하기</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { mountHeader } from "../src/lib/header_loader.js";
+    import { initOrderDetail } from "../src/pages/order_detail.js";
+
+    await mountHeader();
+    initOrderDetail();
+  </script>
+</body>
+</html>

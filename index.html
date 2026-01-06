@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mobion Mall</title>
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <div class="catNav">
+    <div class="wrap catInner">
+      <button class="catBtn" onclick="goCat('fashion')">패션</button>
+      <button class="catBtn" onclick="goCat('beauty')">뷰티</button>
+      <button class="catBtn" onclick="goCat('digital')">디지털</button>
+      <span class="divider"></span>
+      <a class="linkBtn" href="./html/product_list.html">전체보기</a>
+      <a class="linkBtn" href="./html/cart.html">장바구니</a>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="heroText">
+        <span class="pill">NEW</span>
+        <h1>모비온 광고 검증용 샘플몰</h1>
+        <p>메인 → 리스트 → 상세 플로우로 <b>payload/가격/이미지</b>를 빠르게 확인하세요.</p>
+
+        <div class="heroBtns">
+          <button class="primary" onclick="goCat('fashion')">패션 보러가기</button>
+          <button onclick="goCat('beauty')">뷰티 보러가기</button>
+        </div>
+
+        <p class="miniNote">
+          Tip) URL 파라미터로 campaign/mediaca/tracking을 주면 상세 payload에 반영돼요.
+        </p>
+      </div>
+
+      <div class="heroBanner">
+        <div class="bannerCard">
+          <div class="bannerTop">
+            <span class="badge">PROMO</span>
+            <span class="mini">오늘만 특가</span>
+          </div>
+          <div class="bannerMain">
+            <div class="bannerTitle">최대 20% 쿠폰</div>
+            <div class="bannerDesc">테스트용 프로모션 배너 영역</div>
+          </div>
+        </div>
+        <div class="bannerCard soft">
+          <div class="bannerTop">
+            <span class="badge">HOT</span>
+            <span class="mini">베스트</span>
+          </div>
+          <div class="bannerMain">
+            <div class="bannerTitle">베스트 상품</div>
+            <div class="bannerDesc">클릭 시 상세로 이동</div>
+          </div>
+          <button class="bannerCTA" onclick="goDetail('P-20001-V2')">바로가기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sectionHead">
+        <h2>추천 상품</h2>
+        <button class="ghost" onclick="goCat('fashion')">더보기</button>
+      </div>
+      <div class="pgrid" id="recGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="sectionHead">
+        <h2>베스트</h2>
+        <button class="ghost" onclick="goCat('beauty')">더보기</button>
+      </div>
+      <div class="pgrid" id="bestGrid"></div>
+    </section>
+
+    <footer class="footer">
+      <div class="mini">© MobionMall Sample. QA/광고 검증용 템플릿</div>
+    </footer>
+  </main>
+
+  <script type="module">
+    import { mountHeader } from "./src/lib/header_loader.js";
+    import { goCat, goDetail } from "./src/lib/nav.js";
+    import { buildListProducts } from "./src/lib/products_list_data.js";
+
+    window.goCat = goCat;
+    window.goDetail = goDetail;
+
+    const ALL = buildListProducts();
+    const normalizePid = (pid) => {
+      const hit = ALL.find(p => p.id === pid) || ALL.find(p => String(p.id).startsWith(pid + "-V"));
+      return hit ? hit.id : pid;
+    };
+
+    const format = (n) => Number(n).toLocaleString("ko-KR") + "원";
+    const cardHtml = (p) => {
+      const pid = normalizePid(p.baseId || p.id);
+      return `
+        <div class="pcard" onclick="goDetail('${pid}')">
+          <img class="pthumb" src="${p.img}" alt="">
+          <div class="pname">${p.name}</div>
+          <div class="pprice">
+            <span class="origin">${format(p.op)}</span>
+            <span class="sale">${format(p.sp)}</span>
+          </div>
+        </div>
+      `;
+    };
+
+    await mountHeader();
+
+    document.getElementById("recGrid").innerHTML = ALL.slice(0, 4).map(cardHtml).join("");
+    document.getElementById("bestGrid").innerHTML = ALL.slice(2, 6).map(cardHtml).join("");
+  </script>
+</body>
+</html>

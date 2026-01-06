@@ -1,0 +1,38 @@
+<header class="header">
+  <div class="wrap headerInner">
+    <a class="logo" id="hdrHome" href="../index.html" aria-label="홈">MOBION MALL</a>
+
+    <form id="searchForm" class="search" role="search">
+      <input id="searchInput" type="search" placeholder="상품 검색" autocomplete="off" />
+      <button type="submit">검색</button>
+    </form>
+
+    <nav class="icons" aria-label="바로가기">
+      <a class="iconBtn" id="hdrCart" href="./cart.html" title="장바구니">🛒<span class="miniTxt">장바구니</span></a>
+      <a class="iconBtn" id="hdrList" href="./product_list.html" title="상품">🛍️<span class="miniTxt">상품</span></a>
+      <a class="iconBtn" id="hdrMy" href="./mypage.html" title="마이">👤<span class="miniTxt">마이</span></a>
+    </nav>
+  </div>
+</header>
+
+<script type="module">
+  const inHtmlFolder = location.pathname.includes("/html/");
+  const base = inHtmlFolder ? "." : "./html";
+
+  // ✅ 링크 자동 보정 (헤더가 어디에 삽입되든 정상 동작)
+  document.getElementById("hdrHome").setAttribute("href", inHtmlFolder ? "../index.html" : "./index.html");
+  document.getElementById("hdrCart").setAttribute("href", `${base}/cart.html`);
+  document.getElementById("hdrList").setAttribute("href", `${base}/product_list.html`);
+  document.getElementById("hdrMy").setAttribute("href", `${base}/mypage.html`);
+
+  // ✅ 검색은 무조건 리스트로
+  const form = document.getElementById("searchForm");
+  const input = document.getElementById("searchInput");
+
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const keyword = (input?.value || "").trim();
+    if (!keyword) return;
+    location.href = `${base}/product_list.html?keyword=${encodeURIComponent(keyword)}`;
+  });
+</script>

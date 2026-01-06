@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MobionMall - Complete</title>
+
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/complete.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <div class="catNav">
+    <div class="wrap catInner">
+      <a class="linkBtn" href="../index.html">홈</a>
+      <a class="linkBtn" href="./cart.html">장바구니</a>
+      <span class="divider"></span>
+      <span class="linkBtn">구매완료</span>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="box">
+      <div class="big">구매가 완료되었습니다 🎉</div>
+      <div class="muted" id="sub">-</div>
+
+      <div style="margin-top:12px;">
+        <div class="kv"><span>주문번호</span><span id="orderId">-</span></div>
+        <div class="kv"><span>결제금액</span><span id="total">-</span></div>
+        <div class="kv"><span>주문일시</span><span id="created">-</span></div>
+      </div>
+
+      <div class="list">
+        <div class="muted" style="margin-bottom:8px;">주문 상품</div>
+        <div id="items"></div>
+      </div>
+
+      <div class="actions">
+        <a class="btnLink" href="../index.html">메인으로</a>
+        <a class="btnLink" href="./product_list.html?category=fashion">계속 쇼핑</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { mountHeader } from "../src/lib/header_loader.js";
+    import { initComplete } from "../src/pages/complete.js";
+
+    await mountHeader();
+    initComplete();
+  </script>
+</body>
+</html>

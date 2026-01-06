@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MobionMall - Product List</title>
+
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/product_list.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <div class="catNav">
+    <div class="wrap catInner">
+      <button class="catBtn" onclick="goCat('fashion')">패션</button>
+      <button class="catBtn" onclick="goCat('beauty')">뷰티</button>
+      <button class="catBtn" onclick="goCat('digital')">디지털</button>
+      <span class="divider"></span>
+      <a class="linkBtn" href="../index.html">홈</a>
+      <a class="linkBtn" href="./cart.html">장바구니</a>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="breadcrumb" id="breadcrumb"></div>
+
+    <section class="banner">
+      <div class="left">
+        <div class="title" id="bannerTitle">특가 모아보기</div>
+        <div class="desc" id="bannerDesc">정렬바 고정 + 무한스크롤 느낌 (샘플)</div>
+      </div>
+      <button class="cta" type="button" onclick="scrollToGrid()">상품보기</button>
+    </section>
+
+    <section class="sortBar" id="sortBar">
+      <div class="sortLeft">
+        <button class="chip active" id="chipAll" type="button">전체</button>
+        <button class="chip" id="chipCoupon" type="button">쿠폰</button>
+        <button class="chip" id="chipFast" type="button">빠른배송</button>
+      </div>
+
+      <div class="sortRight">
+        <span class="count" id="countText">-</span>
+        <select class="select" id="sort">
+          <option value="popular">인기순</option>
+          <option value="priceAsc">낮은가격</option>
+          <option value="priceDesc">높은가격</option>
+          <option value="discount">할인율</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="layout" id="gridAnchor">
+      <aside class="sidebar">
+        <div class="sideTitle">필터</div>
+
+        <div class="sideGroup">
+          <h3>혜택</h3>
+          <label class="checkRow"><input type="checkbox" id="fCoupon"> 쿠폰 가능</label>
+          <label class="checkRow"><input type="checkbox" id="fFast"> 빠른배송</label>
+        </div>
+
+        <div class="sideGroup">
+          <h3>가격</h3>
+          <div class="priceRow">
+            <input id="minPrice" inputmode="numeric" placeholder="최소" />
+            <input id="maxPrice" inputmode="numeric" placeholder="최대" />
+          </div>
+        </div>
+
+        <div class="sideBtnRow">
+          <button type="button" id="btnReset">초기화</button>
+          <button type="button" class="primary" id="btnApply">적용</button>
+        </div>
+      </aside>
+
+      <section>
+        <div class="grid" id="grid"></div>
+        <div class="loader" id="loader">스크롤하면 더 불러오는 중… (샘플 무한스크롤)</div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    import { mountHeader } from "../src/lib/header_loader.js";
+    import { initProductList } from "../src/pages/product_list.js";
+
+    await mountHeader();
+    initProductList();
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  margin: 24px;
+}
+
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background:#eef6ff;
+  color:#1b65d6;
+  font-size: 12px;
+  margin-right: 6px;
+}
+
+button {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+button:hover {
+  background:#f7f7f7;
+}
+
+.origin {
+  text-decoration: line-through;
+  color:#888;
+  margin-right: 6px;
+}
+.sale {
+  font-weight: 800;
+}

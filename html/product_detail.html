@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MobionMall - Product Detail</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/product_detail.css" />
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <main class="wrap">
+    <!-- 상단: 이미지/정보 -->
+    <section class="pdTop">
+      <div class="pdLeft card">
+        <img id="pdMainImg" class="mainImg" alt="" />
+        <div id="pdThumbs" class="thumbs"></div>
+      </div>
+
+      <div class="pdRight card">
+        <div class="brand">MobionMall</div>
+        <h1 id="pdName" class="title">상품명</h1>
+
+        <div class="chipsRow">
+          <span class="chip small" id="chipCampaign">campaign: -</span>
+          <span class="chip small" id="chipMediaca">mediaca: -</span>
+          <span class="chip small" id="chipTracking">tracking: -</span>
+        </div>
+
+        <div class="priceBox">
+          <div class="priceRow">
+            <span id="pdDiscount" class="discount">0%</span>
+            <span id="pdSp" class="sp">0원</span>
+          </div>
+          <div class="subPriceRow">
+            <span id="pdOp" class="op">0원</span>
+            <span class="muted">정상가</span>
+          </div>
+        </div>
+
+        <div class="infoGrid">
+          <div class="k">혜택</div><div class="v">쿠폰 적용 시 추가 할인</div>
+          <div class="k">배송</div><div class="v">오늘 출고 (빠른배송)</div>
+          <div class="k">적립</div><div class="v">최대 2% 적립</div>
+        </div>
+
+        <div class="field">
+          <div class="label">옵션</div>
+          <select id="pdOption" class="select">
+            <option value="기본 옵션">기본 옵션</option>
+            <option value="옵션 A">옵션 A</option>
+            <option value="옵션 B">옵션 B</option>
+          </select>
+        </div>
+
+        <div class="qtyRow">
+          <button class="qtyBtn" id="btnMinus" type="button">−</button>
+          <input class="qtyVal" id="qtyInput" type="number" min="1" max="99" value="1" />
+          <button class="qtyBtn" id="btnPlus" type="button">+</button>
+        </div>
+
+        <div class="actionRow">
+          <button class="btnIcon" id="btnWish" type="button" title="찜">★</button>
+          <button class="btn primary" id="btnCart" type="button">장바구니</button>
+          <button class="btn dark" id="btnBuy" type="button">바로구매</button>
+        </div>
+
+        <div class="muted smallNote">* 광고/트래킹 QA 샘플</div>
+      </div>
+    </section>
+    <!-- ✅ 상세/리뷰/문의 탭 -->
+    <section class="card detailTabs">
+      <div class="tabBar" role="tablist" aria-label="상품 상세 탭">
+        <button class="tabBtn isActive" type="button" role="tab" aria-selected="true" data-tab="desc">상세설명</button>
+        <button class="tabBtn" type="button" role="tab" aria-selected="false" data-tab="review">리뷰</button>
+        <button class="tabBtn" type="button" role="tab" aria-selected="false" data-tab="qna">문의</button>
+      </div>
+
+      <div class="tabPanels">
+        <div class="tabPanel isActive" role="tabpanel" data-panel="desc">
+          <h3 class="tabTitle">상품 상세설명</h3>
+          <p class="muted">샘플 텍스트입니다. 실제 상품설명/상세 이미지/설명 영역을 구성할 수 있어요.</p>
+          <ul class="dotList">
+            <li>소재/구성: 샘플</li>
+            <li>제조국: 샘플</li>
+            <li>주의사항: 샘플</li>
+          </ul>
+        </div>
+
+        <div class="tabPanel" role="tabpanel" data-panel="review">
+          <div class="panelHead">
+            <h3 class="tabTitle">리뷰</h3>
+            <button class="btn sm" type="button" id="btnWriteReview">리뷰 작성</button>
+          </div>
+          <div id="reviewEmpty" class="empty">아직 리뷰가 없습니다.</div>
+          <div id="reviewList" class="list"></div>
+        </div>
+
+        <div class="tabPanel" role="tabpanel" data-panel="qna">
+          <div class="panelHead">
+            <h3 class="tabTitle">문의</h3>
+            <button class="btn sm" type="button" id="btnWriteQna">문의하기</button>
+          </div>
+          <div id="qnaEmpty" class="empty">등록된 문의가 없습니다.</div>
+          <div id="qnaList" class="list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ✅ 작성 모달 (리뷰/문의 공용) -->
+  <div class="modal hidden" id="modal">
+    <div class="modalDim" id="modalDim"></div>
+    <div class="modalBox">
+      <div class="modalHead">
+        <div class="modalTitle" id="modalTitle">작성</div>
+        <button class="btn sm ghost" id="modalClose" type="button">닫기</button>
+      </div>
+
+      <div class="modalBody">
+        <div id="reviewFields" class="hidden">
+          <label class="field">
+            <span class="label">평점(1~5)</span>
+            <input id="inRating" type="number" min="1" max="5" value="5" class="input" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="label">내용</span>
+          <textarea id="inText" class="textarea" rows="5" placeholder="내용을 입력하세요"></textarea>
+        </label>ㄴ
+
+        <div class="modalActions">
+          <button class="btn ghost" id="btnCancel" type="button">취소</button>
+          <button class="btn primary" id="btnSubmit" type="button">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payload(JSON) -->
+  <!-- <section class="card payloadCard">
+    <div class="cardHead">
+      <h2 class="h2">Payload(JSON)</h2>
+      <div class="headBtns">
+        <button class="btn sm" id="btnCopyPayload" type="button">복사</button>
+        <button class="btn sm ghost" id="btnTogglePayload" type="button">접기</button>
+      </div>
+    </div>
+    <pre id="payloadBox" class="payloadPre"></pre>
+  </section>-->
+
+
+  <!-- ✅ QA Payload Viewer -->
+  <section class="qa-panel" id="qaPanel" hidden>
+    <div class="qa-head">
+      <div class="qa-title">
+        <strong>QA Payload Viewer</strong>
+        <span class="qa-badges">
+          <span class="qa-badge" id="qaBadgeType">payload</span>
+          <span class="qa-badge" id="qaBadgeTime">-</span>
+        </span>
+      </div>
+
+      <div class="qa-actions">
+        <button type="button" class="qa-btn" id="qaToggleBtn">접기</button>
+        <button type="button" class="qa-btn" id="qaCopyBtn">복사</button>
+        <button type="button" class="qa-btn" id="qaDownloadBtn">다운로드</button>
+        <button type="button" class="qa-btn qa-btn-ghost" id="qaClearBtn">초기화</button>
+      </div>
+    </div>
+
+    <div class="qa-body" id="qaBody">
+      <div class="qa-grid">
+        <!-- 좌: 요약 -->
+        <div class="qa-card">
+          <div class="qa-card-title">요약</div>
+          <div class="qa-kv">
+            <div class="qa-k">product_id</div><div class="qa-v" id="qaProductId">-</div>
+            <div class="qa-k">name</div><div class="qa-v" id="qaName">-</div>
+            <div class="qa-k">campaign</div><div class="qa-v" id="qaCampaign">-</div>
+            <div class="qa-k">mediaca</div><div class="qa-v" id="qaMediaca">-</div>
+            <div class="qa-k">tracking</div><div class="qa-v" id="qaTracking">-</div>
+            <div class="qa-k">price</div><div class="qa-v" id="qaPrice">-</div>
+            <div class="qa-k">op</div><div class="qa-v" id="qaOp">-</div>
+            <div class="qa-k">img</div><div class="qa-v qa-v-link" id="qaImg">-</div>
+          </div>
+        </div>
+
+        <!-- 우: 비교(페이지 표시값 vs payload) -->
+        <div class="qa-card">
+          <div class="qa-card-title">비교 (페이지 표시값 ↔ Payload)</div>
+
+          <div class="qa-compare">
+            <div class="qa-row">
+              <div class="qa-label">상품명</div>
+              <div class="qa-val" id="uiName">UI: -</div>
+              <div class="qa-val" id="plName">PL: -</div>
+              <div class="qa-status" id="stName">-</div>
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label">할인가</div>
+              <div class="qa-val" id="uiPrice">UI: -</div>
+              <div class="qa-val" id="plPrice">PL: -</div>
+              <div class="qa-status" id="stPrice">-</div>
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label">정상가(op)</div>
+              <div class="qa-val" id="uiOp">UI: -</div>
+              <div class="qa-val" id="plOp">PL: -</div>
+              <div class="qa-status" id="stOp">-</div>
+            </div>
+
+            <div class="qa-row">
+              <div class="qa-label">이미지 URL</div>
+              <div class="qa-val qa-ellipsis" id="uiImg">UI: -</div>
+              <div class="qa-val qa-ellipsis" id="plImg">PL: -</div>
+              <div class="qa-status" id="stImg">-</div>
+            </div>
+          </div>
+
+          <div class="qa-hint">
+            * UI 값은 페이지의 DOM에서 읽습니다. (id/class는 아래 JS에서 수정 가능)
+          </div>
+        </div>
+      </div>
+
+      <!-- JSON 원문 -->
+      <div class="qa-json-wrap">
+        <div class="qa-card-title">Payload(JSON)</div>
+        <pre class="qa-json" id="qaJson"></pre>
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import { mountHeader } from "../src/lib/header_loader.js";
+    import { initProductDetail } from "../src/pages/product_detail.js";
+
+    await mountHeader();
+    initProductDetail();
+  </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MobionMall - Cart</title>
+
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <div class="catNav">
+    <div class="wrap catInner">
+      <button class="catBtn" onclick="goCat('fashion')">패션</button>
+      <button class="catBtn" onclick="goCat('beauty')">뷰티</button>
+      <button class="catBtn" onclick="goCat('digital')">디지털</button>
+      <span class="divider"></span>
+      <a class="linkBtn" href="../index.html">홈</a>
+      <a class="linkBtn" href="./product_list.html">상품</a>
+    </div>
+  </div>
+
+  <main class="wrap cartWrap">
+    <section class="panel">
+      <h1>장바구니</h1>
+      <div class="small" id="cartHint"></div>
+
+      <div id="items"></div>
+
+      <div id="empty" class="empty" style="display:none;">
+        장바구니가 비어있어요 🛒<br/>
+        <div style="margin-top:10px;">
+          <a class="btnLink" href="./product_list.html">쇼핑하러 가기</a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h2>결제 요약</h2>
+      <div class="summaryRow"><span>상품금액</span><span id="sumPrice">-</span></div>
+      <div class="summaryRow"><span>할인</span><span id="sumDiscount">-</span></div>
+      <div class="summaryRow"><span>배송비</span><span id="shipFee">0원</span></div>
+      <div class="summaryRow"><span class="total">총 결제</span><span class="total" id="sumTotal">-</span></div>
+
+      <button class="primary buyBtn" id="btnCheckout" type="button">구매하기</button>
+      <button class="ghost buyBtn" id="btnClear" type="button">장바구니 비우기</button>
+
+      <div class="small" style="margin-top:10px;">
+        * 샘플: 구매하기 클릭 → complete.html로 이동(주문 데이터 localStorage 저장)
+      </div>
+    </aside>
+  </main>
+
+  <script type="module">
+    import { mountHeader } from "../src/lib/header_loader.js";
+    import { initCart } from "../src/pages/cart.js";
+
+    await mountHeader();
+    initCart();
+  </script>
+</body>
+</html>

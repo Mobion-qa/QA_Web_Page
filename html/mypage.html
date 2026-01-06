@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MobionMall - MyPage</title>
+
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/mypage.css" />
+</head>
+<body>
+  <div id="appHeader"></div>
+
+  <main class="wrap">
+    <h1 class="pageTitle">마이페이지</h1>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2>내 정보</h2>
+        <button id="btnEditProfile" class="btn">수정</button>
+      </div>
+
+      <div id="profileView" class="grid2">
+        <div><div class="label">이름</div><div id="pfName" class="value">-</div></div>
+        <div><div class="label">연락처</div><div id="pfPhone" class="value">-</div></div>
+        <div class="span2"><div class="label">배송지</div><div id="pfAddr" class="value">-</div></div>
+      </div>
+
+      <form id="profileForm" class="grid2 hidden">
+        <label class="field">
+          <span>이름</span>
+          <input id="inName" type="text" placeholder="홍길동" />
+        </label>
+        <label class="field">
+          <span>연락처</span>
+          <input id="inPhone" type="tel" placeholder="010-0000-0000" />
+        </label>
+        <label class="field span2">
+          <span>배송지</span>
+          <input id="inAddr" type="text" placeholder="서울시 ..." />
+        </label>
+        <div class="span2 actions">
+          <button type="button" id="btnCancelProfile" class="btn ghost">취소</button>
+          <button type="submit" class="btn primary">저장</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2>주문 내역</h2>
+        <div class="muted">최근 10건</div>
+      </div>
+      <div id="ordersEmpty" class="empty">주문 내역이 없습니다.</div>
+      <div id="ordersList" class="list"></div>
+    </section>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2>찜한 상품</h2>
+        <a class="link" href="./product_list.html">더 보러가기</a>
+      </div>
+      <div id="wishEmpty" class="empty">찜한 상품이 없습니다.</div>
+      <div id="wishGrid" class="grid"></div>
+    </section>
+
+    <!-- ✅ 추가: 장바구니 미리보기 -->
+    <section class="card">
+      <div class="cardHead">
+        <h2>장바구니</h2>
+        <a class="link" href="./cart.html">장바구니로</a>
+      </div>
+      <div id="cartEmpty" class="empty">장바구니가 비어있습니다.</div>
+      <div id="cartPreview" class="list"></div>
+    </section>
+
+    <section class="card">
+      <div class="cardHead">
+        <h2>빠른 메뉴</h2>
+      </div>
+      <div class="actionsRow">
+        <a class="btn" href="./cart.html">장바구니 보기</a>
+        <button id="btnClearCart" class="btn danger">장바구니 비우기</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { mountHeader } from "../src/lib/header_loader.js";
+    import { initMyPage } from "../src/pages/mypage.js";
+
+    await mountHeader();
+    initMyPage();
+  </script>
+</body>
+</html>
