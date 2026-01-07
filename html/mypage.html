@@ -89,11 +89,15 @@
   </main>
 
   <script type="module">
-    import { mountHeader } from "../src/lib/header_loader.js";
-    import { initMyPage } from "../src/pages/mypage.js";
+    // SPA(본문교체)로 진입한 상태면 라우터가 init을 해주므로 실행하지 않음
+    if (!window.__SPA_ACTIVE__) {
+      const { mountHeader } = await import("../src/lib/header_loader.js");
+      await mountHeader();
 
-    await mountHeader();
-    initMyPage();
+      const { initMyPage } = await import("../src/pages/mypage.js"); // 페이지별로 변경
+      initMyPage();
+    }
   </script>
+
 </body>
 </html>

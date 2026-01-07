@@ -34,11 +34,15 @@
   </main>
 
   <script type="module">
-    import { mountHeader } from "../src/lib/header_loader.js";
-    import { initOrderDetail } from "../src/pages/order_detail.js";
+    // SPA(본문교체)로 진입한 상태면 라우터가 init을 해주므로 실행하지 않음
+    if (!window.__SPA_ACTIVE__) {
+      const { mountHeader } = await import("../src/lib/header_loader.js");
+      await mountHeader();
 
-    await mountHeader();
-    initOrderDetail();
+      const { initOrderDetail } = await import("../src/pages/order_detail.js"); // 페이지별로 변경
+      initOrderDetail();
+    }
   </script>
+
 </body>
 </html>

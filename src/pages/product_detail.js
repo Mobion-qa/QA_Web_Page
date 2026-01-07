@@ -298,9 +298,9 @@ const payload = {
   price_sale: sp,
 
   // 트래킹 파라미터
-  campaign: campaign ?? null,
-  mediaca: mediaca ?? null,
-  tracking: tracking ?? null,
+  // campaign: campaign ?? null,
+  // mediaca: mediaca ?? null,
+  // tracking: tracking ?? null,
 
   ts: new Date().toISOString()
 };
@@ -314,9 +314,9 @@ if (typeof window.setQAPayload === "function") {
   img: imgs[0] || "",
   op,
   dp: sp,
-  campaign,
-  mediaca,
-  tracking,
+  // campaign,
+  // mediaca,
+  // tracking,
   tx: new Date().toISOString()
   });
 }

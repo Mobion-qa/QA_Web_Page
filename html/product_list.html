@@ -84,13 +84,20 @@
       </section>
     </div>
   </main>
-
+  <!-- <script type="module">
+    // SPA 환경이 아닐 때만 실행
+    if (!window.__SPA_ACTIVE__) {
+      import("../src/lib/header_loader.js").then(m => m.mountHeader());
+      import("../src/pages/product_list.js").then(m => m.initProductList());
+    }
+  </script> -->
   <script type="module">
-    import { mountHeader } from "../src/lib/header_loader.js";
-    import { initProductList } from "../src/pages/product_list.js";
-
-    await mountHeader();
-    initProductList();
+    if (!window.__SPA_ACTIVE__) {
+      const { mountHeader } = await import("../src/lib/header_loader.js");
+      await mountHeader();
+      const { initProductList } = await import("../src/pages/product_list.js");
+      initProductList();
+    }
   </script>
 </body>
 </html>

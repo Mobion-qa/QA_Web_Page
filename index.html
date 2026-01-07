@@ -90,10 +90,12 @@
     import { mountHeader } from "./src/lib/header_loader.js";
     import { goCat, goDetail } from "./src/lib/nav.js";
     import { buildListProducts } from "./src/lib/products_list_data.js";
+    import { enableSpaLinks } from "./src/lib/spa_router.js";
 
     window.goCat = goCat;
     window.goDetail = goDetail;
-
+    window.__SPA_ACTIVE__ = true;
+    
     const ALL = buildListProducts();
     const normalizePid = (pid) => {
       const hit = ALL.find(p => p.id === pid) || ALL.find(p => String(p.id).startsWith(pid + "-V"));
@@ -116,6 +118,7 @@
     };
 
     await mountHeader();
+    enableSpaLinks();      // ✅ 링크 가로채기 시작
 
     document.getElementById("recGrid").innerHTML = ALL.slice(0, 4).map(cardHtml).join("");
     document.getElementById("bestGrid").innerHTML = ALL.slice(2, 6).map(cardHtml).join("");

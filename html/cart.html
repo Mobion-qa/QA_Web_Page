@@ -42,11 +42,11 @@
 
     <aside class="panel">
       <h2>결제 요약</h2>
-      <div class="summaryRow"><span>상품금액</span><span id="sumPrice">-</span></div>
-      <div class="summaryRow sub"><span>총수량</span><span id="sumQty">0개</span></div>
-      <div class="summaryRow"><span>할인</span><span id="sumDiscount">-</span></div>
-      <div class="summaryRow"><span>배송비</span><span id="shipFee">0원</span></div>
-      <div class="summaryRow"><span class="total">총 결제</span><span class="total" id="sumTotal">-</span></div>
+      <div class="summaryRow"><span>상품금액</span><span id="sumPrice"></span></div>
+      <div class="summaryRow sub"><span>총수량</span><span id="sumQty"></span></div>
+      <div class="summaryRow"><span>할인</span><span id="sumDiscount"></span></div>
+      <div class="summaryRow"><span>배송비</span><span id="shipFee"></span></div>
+      <div class="summaryRow"><span class="total">총 결제</span><span class="total" id="sumTotal"></span></div>
 
       <button class="primary buyBtn" id="btnCheckout" type="button">구매하기</button>
       <button class="ghost buyBtn" id="btnClear" type="button">장바구니 비우기</button>
@@ -58,11 +58,15 @@
   </main>
 
   <script type="module">
-    import { mountHeader } from "../src/lib/header_loader.js";
-    import { initCart } from "../src/pages/cart.js";
+    // SPA(본문교체)로 진입한 상태면 라우터가 init을 해주므로 실행하지 않음
+    if (!window.__SPA_ACTIVE__) {
+      const { mountHeader } = await import("../src/lib/header_loader.js");
+      await mountHeader();
 
-    await mountHeader();
-    initCart();
+      const { initCart } = await import("../src/pages/cart.js"); // 페이지별로 변경
+      initCart();
+    }
   </script>
+
 </body>
 </html>

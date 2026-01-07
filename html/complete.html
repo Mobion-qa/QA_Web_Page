@@ -29,10 +29,10 @@
       <div class="muted" id="sub">-</div>
 
       <div style="margin-top:12px;">
-        <div class="kv"><span>주문번호</span><span id="orderId">-</span></div>
-        <div class="kv"><span>총수량</span><span id="sumQty">-</span></div>
-        <div class="kv"><span>결제금액</span><span id="total">-</span></div>
-        <div class="kv"><span>주문일시</span><span id="created">-</span></div>
+        <div class="kv"><span>주문번호</span><span id="orderId"></span></div>
+        <div class="kv"><span>총수량</span><span id="sumQty"></span></div>
+        <div class="kv"><span>결제금액</span><span id="total"></span></div>
+        <div class="kv"><span>주문일시</span><span id="created"></span></div>
       </div>
 
       <div class="list">
@@ -48,11 +48,15 @@
   </main>
 
   <script type="module">
-    import { mountHeader } from "../src/lib/header_loader.js";
-    import { initComplete } from "../src/pages/complete.js";
+    // SPA(본문교체)로 진입한 상태면 라우터가 init을 해주므로 실행하지 않음
+    if (!window.__SPA_ACTIVE__) {
+      const { mountHeader } = await import("../src/lib/header_loader.js");
+      await mountHeader();
 
-    await mountHeader();
-    initComplete();
+      const { initComplete } = await import("../src/pages/complete.js"); // 페이지별로 변경
+      initComplete();
+    }
   </script>
+
 </body>
 </html>

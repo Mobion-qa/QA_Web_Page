@@ -16,6 +16,7 @@
 </header>
 
 <script type="module">
+  import { spaNavigate } from "../../src/lib/spa_router.js"; // header.html 위치: html/partials/header.html 기준
   const inHtmlFolder = location.pathname.includes("/html/");
   const base = inHtmlFolder ? "." : "./html";
 

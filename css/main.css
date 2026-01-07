@@ -74,3 +74,12 @@
   color:#fff;
   border-color:#111;
 }
+
+html.is-navigating [data-router-view] {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+[data-router-view] {
+  opacity: 1;
+  transition: opacity 120ms ease;
+}
